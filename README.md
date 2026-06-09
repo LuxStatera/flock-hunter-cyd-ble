@@ -6,7 +6,7 @@ A passive Bluetooth Low Energy (BLE) Flock Safety camera detector built for the 
 
 This project evolved from the original **[Flock You](https://github.com/colonelpanichacks/flock-you)** project by **[colonelpanichacks](https://github.com/colonelpanichacks)**. BLE manufacturer ID detection research by **@wgreenberg**.
 
-This firmware and this documentation were all written by Claude.
+This firmware and documentation were built with **[Claude](https://claude.ai)** by Anthropic.
 
 ## How It Works
 
