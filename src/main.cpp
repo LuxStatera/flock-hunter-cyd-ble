@@ -575,7 +575,7 @@ void setup() {
     st = ST_SCAN;
     needFull = true;
     lastScanStart = millis();
-    pBLEScan->start(0, false);  // 0 = scan continuously
+    pBLEScan->start(1, false);
 
     Serial.println("[FLOCK HUNTER BLE] Scanning for MFR ID 0x09C8");
 }
@@ -586,9 +586,10 @@ void setup() {
 void loop() {
     unsigned long now = millis();
 
-    // Clear accumulated results periodically to free memory
-    if (now - lastScanStart > 5000) {
+    // Restart scan after each cycle completes
+    if (now - lastScanStart > 1100) {
         pBLEScan->clearResults();
+        pBLEScan->start(1, false);
         lastScanStart = now;
     }
 
