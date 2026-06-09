@@ -14,7 +14,7 @@ Flock Safety cameras broadcast BLE advertisements containing the manufacturer ID
 
 ### Why BLE?
 
-WiFi-based detection (used by [Flock Hunter CYD](https://github.com/LuxStatera/flock-hunter-cyd)) matches MAC address OUI prefixes in 802.11 frames. BLE detection is a complementary approach — some cameras may be detectable via BLE when their WiFi radio is quiet. Running both a WiFi detector and a BLE detector gives the best coverage.
+WiFi-based detection (used by [Flock Hunter CYD](https://github.com/LuxStatera/flock-hunter-cyd-wifi)) matches MAC address OUI prefixes in 802.11 frames. BLE detection is a complementary approach — some cameras may be detectable via BLE when their WiFi radio is quiet. Running both a WiFi detector and a BLE detector gives the best coverage.
 
 ## Hardware
 
@@ -112,8 +112,8 @@ pip install platformio
 
 ### Step 2: Download This Project
 ```bash
-git clone https://github.com/LuxStatera/flock-hunter-ble.git
-cd flock-hunter-ble
+git clone https://github.com/LuxStatera/flock-hunter-cyd-ble.git
+cd flock-hunter-cyd-ble
 ```
 
 ### Step 3: Update Serial Port
@@ -148,8 +148,8 @@ Support for an **ATGM336H GPS module** connected via the CN1 expansion header (G
 
 ## Companion Projects
 
-- **[Flock Hunter CYD](https://github.com/LuxStatera/flock-hunter-cyd)** — WiFi-based detector (32 OUI prefixes + PCAP capture)
-- **[Flock Hunter D1 Mini](https://github.com/LuxStatera/flock-hunter-d1-mini)** — WiFi-based detector (ESP8266 + OLED + buzzer)
+- **[Flock Hunter CYD](https://github.com/LuxStatera/flock-hunter-cyd-wifi)** — WiFi-based detector (32 OUI prefixes + PCAP capture)
+- **[Flock Hunter D1 Mini](https://github.com/LuxStatera/flock-hunter-d1-mini-wifi)** — WiFi-based detector (ESP8266 + OLED + buzzer)
 - **[Flock Camera Emulator](https://github.com/LuxStatera/flock-camera-emulator)** — ESP32 test tool for WiFi detection
 
 ## Legal Disclaimer
