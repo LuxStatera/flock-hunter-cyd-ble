@@ -69,8 +69,8 @@ static unsigned long listT = 0;
 // BLE scan
 BLEScan* pBLEScan = nullptr;
 static unsigned long lastScanStart = 0;
-#define BLE_SCAN_TIME 3       // seconds per scan cycle
-#define BLE_SCAN_INTERVAL 100 // ms between scan restarts
+#define BLE_SCAN_TIME 1       // seconds per scan cycle
+#define BLE_SCAN_INTERVAL 50  // ms between scan restarts
 
 // ═══════════════════════════════════════════════════════════════════════════
 // HELPERS
@@ -293,20 +293,20 @@ void drawScan() {
         tft.setTextDatum(TL_DATUM);
 
         // Divider after channels
-        tft.drawFastHLine(8, 120, SW-16, DDGRN);
+        tft.drawFastHLine(8, 120, SW-16, DBLU);
 
         // Labels
-        tft.setTextFont(2); tft.setTextColor(DGRN, BG);
+        tft.setTextFont(2); tft.setTextColor(DBLU, BG);
         tft.drawString("BLE DEVICES", 15, 130);
         tft.drawString("CAMERAS", SW/2 + 10, 130);
 
         // Divider
-        tft.drawFastHLine(8, 180, SW-16, DDGRN);
+        tft.drawFastHLine(8, 180, SW-16, DBLU);
 
         // SD status
         tft.setTextFont(2);
         if (sdReady) {
-            tft.setTextColor(DGRN, BG);
+            tft.setTextColor(DBLU, BG);
             tft.drawString("SD: OK   CSV: REC", 15, 210);
         } else {
             tft.setTextColor(DRED, BG);
@@ -351,7 +351,7 @@ void drawScan() {
     // BLE device count
     if (totalScanned != prevScanned) {
         tft.setTextFont(4);
-        tft.setTextColor(GRN, BG);
+        tft.setTextColor(BLU, BG);
         char b[16]; sprintf(b, "%-8d", totalScanned);
         tft.drawString(b, 15, 150);
         prevScanned = totalScanned;
@@ -360,7 +360,7 @@ void drawScan() {
     // Camera count
     if (nDet != prevDet) {
         tft.setTextFont(4);
-        tft.setTextColor(nDet > 0 ? RED : GRN, BG);
+        tft.setTextColor(nDet > 0 ? RED : BLU, BG);
         char b[16]; sprintf(b, "%-6d", nDet);
         tft.drawString(b, SW/2 + 10, 150);
         prevDet = nDet;
@@ -376,10 +376,10 @@ void drawScan() {
             char ab[24]; sprintf(ab, "%d IN RANGE", active);
             tft.drawString(ab, 15, 190);
         } else {
-            tft.setTextColor(DDGRN, BG);
+            tft.setTextColor(DBLU, BG);
             tft.drawString("No cameras in range", 15, 190);
         }
-        tft.setTextColor(DDGRN, BG);
+        tft.setTextColor(DBLU, BG);
         tft.drawString("PASSIVE BLE", SW - 110, 190);
         prevActive = active;
     }
@@ -387,7 +387,7 @@ void drawScan() {
     // Uptime
     unsigned long sec = millis()/1000;
     char ut[16]; sprintf(ut, "%02lu:%02lu  ", sec/60, sec%60);
-    tft.setTextFont(2); tft.setTextColor(DDGRN, BG);
+    tft.setTextFont(2); tft.setTextColor(DBLU, BG);
     tft.drawString(ut, SW - 70, 210);
 }
 
@@ -427,35 +427,35 @@ void drawAlert(int idx) {
     y += 8;
 
     // MAC Address
-    tft.setTextFont(2); tft.setTextColor(DGRN, bg);
+    tft.setTextFont(2); tft.setTextColor(DBLU, bg);
     tft.drawString("MAC ADDRESS", 12, y);
     char mb[18]; fmtMac(d.mac, mb);
-    tft.setTextColor(GRN, bg);
+    tft.setTextColor(BLU, bg);
     tft.drawString(mb, 140, y);
 
     y += 20;
 
     // Signal + range
-    tft.setTextColor(DGRN, bg);
+    tft.setTextColor(DBLU, bg);
     tft.drawString("SIGNAL", 12, y);
-    tft.setTextColor(GRN, bg);
+    tft.setTextColor(BLU, bg);
     char rb[24]; sprintf(rb, "%d dBm  %s", d.rssi, rssiLabel(d.rssi));
     tft.drawString(rb, 140, y);
 
     y += 20;
 
     // Manufacturer ID
-    tft.setTextColor(DGRN, bg);
+    tft.setTextColor(DBLU, bg);
     tft.drawString("MFR ID", 12, y);
-    tft.setTextColor(GRN, bg);
+    tft.setTextColor(BLU, bg);
     tft.drawString("0x09C8 (FLOCK)", 140, y);
 
     y += 20;
 
     // Device name
-    tft.setTextColor(DGRN, bg);
+    tft.setTextColor(DBLU, bg);
     tft.drawString("DEVICE NAME", 12, y);
-    tft.setTextColor(GRN, bg);
+    tft.setTextColor(BLU, bg);
     tft.drawString(d.name, 140, y);
 
     y += 22;
@@ -463,18 +463,18 @@ void drawAlert(int idx) {
     y += 8;
 
     // Hits
-    tft.setTextColor(DGRN, bg);
+    tft.setTextColor(DBLU, bg);
     tft.drawString("HITS", 12, y);
-    tft.setTextColor(GRN, bg);
+    tft.setTextColor(BLU, bg);
     char hb[8]; sprintf(hb, "%d", d.count);
     tft.drawString(hb, 140, y);
 
     y += 20;
 
     // Status
-    tft.setTextColor(DGRN, bg);
+    tft.setTextColor(DBLU, bg);
     tft.drawString("STATUS", 12, y);
-    tft.setTextColor(d.active ? GRN : RED, bg);
+    tft.setTextColor(d.active ? BLU : RED, bg);
     tft.drawString(d.active ? "LIVE" : "STALE", 140, y);
 }
 
@@ -485,16 +485,16 @@ void drawList() {
     if (needFull) {
         tft.fillScreen(BG);
 
-        tft.fillRect(0, 0, SW, 30, GRN);
+        tft.fillRect(0, 0, SW, 30, BLU);
         tft.setTextDatum(MC_DATUM);
-        tft.setTextColor(BG, GRN);
+        tft.setTextColor(BG, BLU);
         tft.setTextFont(4);
         char hdr[24]; sprintf(hdr, "FLOCK CAMERAS: %d", nDet);
         tft.drawString(hdr, SW/2, 16);
         tft.setTextDatum(TL_DATUM);
 
         if (nDet == 0) {
-            tft.setTextFont(4); tft.setTextColor(DGRN, BG);
+            tft.setTextFont(4); tft.setTextColor(DBLU, BG);
             tft.setTextDatum(MC_DATUM);
             tft.drawString("NO CAMERAS", SW/2, SH/2 - 15);
             tft.drawString("DETECTED", SW/2, SH/2 + 15);
@@ -508,20 +508,20 @@ void drawList() {
         for (int r = 0; r < show; r++) {
             Det& d = dets[nDet - 1 - r];
             int y = 45 + r * 50;
-            uint16_t fg = d.active ? GRN : GRAY;
+            uint16_t fg = d.active ? BLU : GRAY;
 
-            tft.fillCircle(10, y+8, 4, d.active ? GRN : RED);
+            tft.fillCircle(10, y+8, 4, d.active ? BLU : RED);
 
             char mb[18]; fmtMac(d.mac, mb);
             tft.setTextFont(2); tft.setTextColor(fg, BG);
             tft.drawString(mb, 22, y);
 
-            tft.setTextFont(2); tft.setTextColor(DGRN, BG);
+            tft.setTextFont(2); tft.setTextColor(DBLU, BG);
             char info[48];
             sprintf(info, "%ddBm %s  BLE  %s", d.rssi, rssiLabel(d.rssi), d.name);
             tft.drawString(info, 22, y + 22);
 
-            tft.drawFastHLine(8, y + 42, SW-16, DDGRN);
+            tft.drawFastHLine(8, y + 42, SW-16, DBLU);
         }
         needFull = false;
     }
@@ -595,7 +595,7 @@ void loop() {
 
     updateActive();
 
-    if (now - lastDot >= 500) { lastDot = now; dots = (dots+1) % 4; }
+    if (now - lastDot >= 300) { lastDot = now; dots = (dots+1) % 4; }
     if (st != prevSt) { needFull = true; prevSt = st; }
 
     switch (st) {
