@@ -250,27 +250,27 @@ void drawBoot() {
     if (needFull) {
         tft.fillScreen(BG);
         for (int y = 0; y < SH; y += 8)
-            tft.drawFastHLine(0, y, SW, DDGRN);
+            tft.drawFastHLine(0, y, SW, DBLU);
 
         tft.setTextDatum(MC_DATUM);
-        tft.setTextColor(GRN, BG);
+        tft.setTextColor(BLU, BG);
         tft.setTextFont(4); tft.setTextSize(2);
         tft.drawString("Flock Hunter", SW/2, 80);
         tft.setTextSize(1);
 
-        tft.drawFastHLine(40, 120, SW-80, GRN);
-        tft.drawFastHLine(60, 122, SW-120, DGRN);
+        tft.drawFastHLine(40, 120, SW-80, BLU);
+        tft.drawFastHLine(60, 122, SW-120, DBLU);
 
-        tft.setTextFont(2); tft.setTextColor(DGRN, BG);
+        tft.setTextFont(2); tft.setTextColor(DBLU, BG);
         tft.drawString("Based on Flock You", SW/2, 145);
 
-        tft.setTextFont(2); tft.setTextColor(DDGRN, BG);
+        tft.setTextFont(2); tft.setTextColor(DBLU, BG);
         tft.drawString("ESP32-CYD // BLE Edition", SW/2, 185);
         tft.drawString("MFR ID: 0x09C8", SW/2, 205);
 
-        tft.drawRect(40, 240, SW-80, 16, DGRN);
+        tft.drawRect(40, 240, SW-80, 16, DBLU);
 
-        tft.setTextFont(2); tft.setTextColor(DGRN, BG);
+        tft.setTextFont(2); tft.setTextColor(BLU, BG);
         tft.drawString("INITIALIZING BLE", SW/2, 270);
         tft.setTextDatum(TL_DATUM);
         needFull = false;
@@ -285,9 +285,9 @@ void drawScan() {
         tft.fillScreen(BG);
 
         // Header bar
-        tft.fillRect(0, 0, SW, 30, GRN);
+        tft.fillRect(0, 0, SW, 30, BLU);
         tft.setTextDatum(MC_DATUM);
-        tft.setTextColor(BG, GRN);
+        tft.setTextColor(BG, BLU);
         tft.setTextFont(4);
         tft.drawString("FLOCK HUNTER BLE", SW/2, 16);
         tft.setTextDatum(TL_DATUM);
@@ -323,7 +323,7 @@ void drawScan() {
         tft.setTextFont(4); tft.setTextSize(1);
         tft.setTextDatum(TL_DATUM);
         int tx = 65;
-        int ty = 38;
+        int ty = 50;
         tft.drawString("BLE SCAN", tx, ty);
         int dotX = tx + tft.textWidth("BLE SCAN");
         tft.fillRect(dotX, ty, 50, 26, BG);
@@ -337,7 +337,7 @@ void drawScan() {
     static bool modeDrawn = false;
     if (!modeDrawn) {
         int bw = 200, bh = 30;
-        int x = (SW - bw) / 2, y = 78;
+        int x = (SW - bw) / 2, y = 88;
         tft.fillRoundRect(x, y, bw, bh, 6, BG);
         tft.drawRoundRect(x, y, bw, bh, 6, BLU);
         tft.setTextColor(BLU, BG);
