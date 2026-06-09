@@ -289,7 +289,7 @@ void drawScan() {
         tft.setTextDatum(MC_DATUM);
         tft.setTextColor(BG, BLU);
         tft.setTextFont(4);
-        tft.drawString("FLOCK HUNTER BLE", SW/2, 16);
+        tft.drawString("FLOCK HUNTER", SW/2, 16);
         tft.setTextDatum(TL_DATUM);
 
         // Divider after channels
@@ -322,7 +322,7 @@ void drawScan() {
         tft.setTextColor(BLU, BG);
         tft.setTextFont(4); tft.setTextSize(1);
         tft.setTextDatum(TL_DATUM);
-        int tx = 65;
+        int tx = 80;
         int ty = 50;
         tft.drawString("BLE SCAN", tx, ty);
         int dotX = tx + tft.textWidth("BLE SCAN");
@@ -575,7 +575,7 @@ void setup() {
     st = ST_SCAN;
     needFull = true;
     lastScanStart = millis();
-    pBLEScan->start(BLE_SCAN_TIME, false);
+    pBLEScan->start(1, false);
 
     Serial.println("[FLOCK HUNTER BLE] Scanning for MFR ID 0x09C8");
 }
@@ -586,10 +586,11 @@ void setup() {
 void loop() {
     unsigned long now = millis();
 
-    // Restart BLE scan periodically
-    if (now - lastScanStart > (BLE_SCAN_TIME * 1000 + BLE_SCAN_INTERVAL)) {
+    // Restart BLE scan periodically — short bursts for responsive UI
+    if (now - lastScanStart > 1500) {
+        pBLEScan->stop();
         pBLEScan->clearResults();
-        pBLEScan->start(BLE_SCAN_TIME, false);
+        pBLEScan->start(1, false);
         lastScanStart = now;
     }
 
@@ -616,7 +617,7 @@ void loop() {
             break;
 
         case ST_SCAN:
-            if (now - lastUI >= 200) { lastUI = now; drawScan(); }
+            if (now - lastUI >= 100) { lastUI = now; drawScan(); }
             break;
 
         case ST_LIST:
