@@ -146,11 +146,12 @@ pio run -t upload
 
 Support for an **ATGM336H GPS module** connected via the CN1 expansion header (GPIO 22/27 + 3V3 + GND). This will add GPS coordinates to each CSV detection entry for mapping in Google Earth, Google Maps, or QGIS.
 
-## Companion Projects
+## Flock Hunter Family
 
-- **[Flock Hunter CYD](https://github.com/LuxStatera/flock-hunter-cyd-wifi)** — WiFi-based detector (32 OUI prefixes + PCAP capture)
-- **[Flock Hunter D1 Mini](https://github.com/LuxStatera/flock-hunter-d1-mini-wifi)** — WiFi-based detector (ESP8266 + OLED + buzzer)
-- **[Flock Camera Emulator](https://github.com/LuxStatera/flock-camera-emulator)** — ESP32 test tool for WiFi detection
+- **[Flock Hunter CYD WiFi](https://github.com/LuxStatera/flock-hunter-cyd-wifi)** — WiFi detector with 32 OUI prefixes + PCAP capture
+- **[Flock Hunter CYD BLE](https://github.com/LuxStatera/flock-hunter-cyd-ble)** — Bluetooth detector scanning for manufacturer ID 0x09C8 (this project)
+- **[Flock Hunter D1 Mini WiFi](https://github.com/LuxStatera/flock-hunter-d1-mini-wifi)** — Compact WiFi detector with OLED display + piezo buzzer
+- **[Flock Camera Emulator](https://github.com/LuxStatera/flock-camera-emulator)** — ESP32 test tool for validating detectors
 
 ## Legal Disclaimer
 
