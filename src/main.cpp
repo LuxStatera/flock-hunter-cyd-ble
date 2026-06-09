@@ -313,6 +313,16 @@ void drawScan() {
             tft.drawString("SD: NONE", 15, 210);
         }
 
+        // BLE mode indicator box
+        int bw = 200, bh = 30;
+        int bx = (SW - bw) / 2, by = 88;
+        tft.drawRoundRect(bx, by, bw, bh, 6, BLU);
+        tft.setTextColor(BLU, BG);
+        tft.setTextFont(2);
+        tft.setTextDatum(MC_DATUM);
+        tft.drawString("MFR ID: 0x09C8", bx+bw/2, by+bh/2);
+        tft.setTextDatum(TL_DATUM);
+
         prevDots = -1; prevScanned = -1; prevDet = -1; prevActive = -1;
         needFull = false;
     }
@@ -333,20 +343,7 @@ void drawScan() {
         prevDots = dots;
     }
 
-    // BLE mode indicator box (centered)
-    static bool modeDrawn = false;
-    if (!modeDrawn) {
-        int bw = 200, bh = 30;
-        int x = (SW - bw) / 2, y = 88;
-        tft.fillRoundRect(x, y, bw, bh, 6, BG);
-        tft.drawRoundRect(x, y, bw, bh, 6, BLU);
-        tft.setTextColor(BLU, BG);
-        tft.setTextFont(2);
-        tft.setTextDatum(MC_DATUM);
-        tft.drawString("MFR ID: 0x09C8", x+bw/2, y+bh/2);
-        tft.setTextDatum(TL_DATUM);
-        modeDrawn = true;
-    }
+    // BLE mode indicator box (centered) — drawn in needFull block above
 
     // BLE device count
     if (totalScanned != prevScanned) {
@@ -535,7 +532,7 @@ void setup() {
     Serial.println("\n[FLOCK HUNTER BLE] Booting...");
 
     pinMode(LED_R, OUTPUT); pinMode(LED_G, OUTPUT); pinMode(LED_B, OUTPUT);
-    setLED(false, false, true);  // Blue for boot
+    setLED(false, true, false);  // Green for boot
 
     pinMode(BACKLIGHT_PIN, OUTPUT);
     digitalWrite(BACKLIGHT_PIN, LOW);
@@ -595,7 +592,7 @@ void loop() {
 
     updateActive();
 
-    if (now - lastDot >= 300) { lastDot = now; dots = (dots+1) % 4; }
+    if (now - lastDot >= 200) { lastDot = now; dots = (dots+1) % 4; }
     if (st != prevSt) { needFull = true; prevSt = st; }
 
     switch (st) {
@@ -604,14 +601,14 @@ void loop() {
             break;
 
         case ST_ALERT:
-            analogWrite(LED_G, 255);    // stop PWM breathing
+            analogWrite(LED_B, 255);    // stop blue PWM breathing
             setLED(true, false, false); // red
             if (now - alertT < 5000) {
                 if (now - lastUI >= 200) { lastUI = now; drawAlert(alertIdx); }
             } else {
                 st = nDet > 0 ? ST_LIST : ST_SCAN;
                 listT = now;
-                setLED(false,true,false); needFull = true;
+                setLED(false,false,true); needFull = true;
             }
             break;
 
@@ -638,12 +635,12 @@ void loop() {
         lastRep = nDet;
     }
 
-    // Green breathing during scan
+    // Blue breathing during scan
     if (st == ST_SCAN || st == ST_LIST) {
         digitalWrite(LED_R, HIGH);
-        digitalWrite(LED_B, HIGH);
+        digitalWrite(LED_G, HIGH);
         int b = (sin(now / 500.0) + 1.0) * 127;
-        analogWrite(LED_G, 255-b);
+        analogWrite(LED_B, 255-b);
     }
 
     delay(1);
