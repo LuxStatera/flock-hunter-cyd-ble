@@ -58,7 +58,7 @@ GPS coordinates will be added to the CSV when GPS module support is added.
 Displays "Flock Hunter" title, "Based on Flock You" credit, "BLE Edition" label, and manufacturer ID.
 
 ### Scanning Screen
-- Green header bar with "FLOCK HUNTER BLE" title
+- Blue header bar with "FLOCK HUNTER" title
 - Animated "BLE SCAN..." text
 - Manufacturer ID indicator box (0x09C8)
 - Live BLE device counter and camera counter
@@ -68,21 +68,21 @@ Displays "Flock Hunter" title, "Based on Flock You" credit, "BLE Edition" label,
 
 ### Alert Screen
 Triggered on new camera detection:
-- Red flashing for 1 second, then solid display for 4 seconds
+- Red flashing for 1.5 seconds, then solid display for 3.5 seconds
 - "FLOCK CAMERA DETECTED" banner
 - Details: BLE detection type, MAC address, signal strength with range estimate (CLOSE/NEAR/FAR), manufacturer ID, device name, hits, status
 
 ### Camera List Screen
 - Shows the 4 most recent detected cameras
-- Green/red status dots for active/stale cameras
+- Blue/red status dots for active/stale cameras
 - Displays for 5 seconds before returning to scan mode
 
 ## LED Indicators
 
 | State | LED Color | Behavior |
 |-------|-----------|----------|
-| Boot | Blue | Solid |
-| Scanning | Green | Pulsing (sine wave breathing) |
+| Boot | Green | Solid |
+| Scanning | Blue | Pulsing (sine wave breathing) |
 | Detection | Red | Solid during alert |
 
 ## Range Estimates
@@ -137,7 +137,7 @@ pio run -t upload
 [SD] Card ready — 7627MB
 [SD] Session: /flock/session_001
 [FLOCK HUNTER BLE] Scanning for MFR ID 0x09C8
-[BLE ALERT] D4:E9:F4:B1:40:0C RSSI:-62 Flock Camera
+[BLE ALERT] D4:E9:F4:B1:40:0C RSSI:-62 MFR:0x09C8 Flock Camera
 ```
 
 ## Coming Soon
