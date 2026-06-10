@@ -65,6 +65,8 @@ static bool needFull = true;
 static int prevDots = -1, prevScanned = -1, prevDet = -1, prevActive = -1;
 static int prevFlash = -1;
 static unsigned long listT = 0;
+static volatile bool pendingAlert = false;
+static volatile int pendingAlertIdx = -1;
 
 // BLE scan
 BLEScan* pBLEScan = nullptr;
@@ -216,11 +218,8 @@ static void processDevice(BLEAdvertisedDevice& dev) {
             strcpy(d.name, "Flock Camera");
         }
 
-        alertIdx = nDet;
-        alertT = millis();
-        st = ST_ALERT;
-        needFull = true;
-        playTone();
+        pendingAlertIdx = nDet;
+        pendingAlert = true;
 
         logDetection(d);
 
@@ -315,7 +314,7 @@ void drawScan() {
 
         // BLE mode indicator box
         int bw = 200, bh = 30;
-        int bx = (SW - bw) / 2, by = 88;
+        int bx = (SW - bw) / 2, by = 82;
         tft.drawRoundRect(bx, by, bw, bh, 6, BLU);
         tft.setTextColor(BLU, BG);
         tft.setTextFont(2);
@@ -395,7 +394,7 @@ void drawAlert(int idx) {
     if (idx < 0 || idx >= nDet) return;
     Det& d = dets[idx];
     unsigned long el = millis() - alertT;
-    int flashState = (el < 1000) ? (int)((el / 150) % 2) : 2;
+    int flashState = (el < 1500) ? (int)((el / 300) % 2) : 2;
 
     if (flashState == prevFlash && !needFull) return;
     prevFlash = flashState;
@@ -591,6 +590,16 @@ void loop() {
     }
 
     updateActive();
+
+    // Process pending alert from BLE callback (runs in main loop context)
+    if (pendingAlert) {
+        pendingAlert = false;
+        alertIdx = pendingAlertIdx;
+        st = ST_ALERT;
+        needFull = true;
+        playTone();
+        alertT = millis();
+    }
 
     if (now - lastDot >= 200) { lastDot = now; dots = (dots+1) % 4; }
     if (st != prevSt) { needFull = true; prevSt = st; }
