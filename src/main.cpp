@@ -239,7 +239,7 @@ class FlockScanCallbacks : public BLEAdvertisedDeviceCallbacks {
 // Mark stale devices
 static void updateActive() {
     for (int i = 0; i < nDet; i++)
-        if (millis() - dets[i].last > 30000) dets[i].active = false;
+        if (millis() - dets[i].last > 10000) dets[i].active = false;
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
