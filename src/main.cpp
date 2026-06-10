@@ -599,6 +599,7 @@ void loop() {
         needFull = true;
         playTone();
         alertT = millis();
+        now = millis();  // refresh — playTone() took ~360ms
     }
 
     if (now - lastDot >= 200) { lastDot = now; dots = (dots+1) % 4; }
